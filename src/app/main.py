@@ -62,6 +62,7 @@ def score_cpf():
 # Rota padrão
 @app.route('/')
 def home():
+    print('API de predicao de score para crédito')
     return 'API de Predição de Crédito'
 
 # Subir a API
