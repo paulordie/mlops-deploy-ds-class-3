@@ -9,6 +9,8 @@ import pickle
 from flask import Flask, request, jsonify
 from flask_basicauth import BasicAuth
 
+import os
+
 
 
 # Antes das APIs
@@ -21,8 +23,8 @@ colunas = ['RevolvingUtilizationOfUnsecuredLines', 'age',
 
 app = Flask(__name__)
 
-app.config["BASIC_AUTH_USERNAME"] = "adm"
-app.config["BASIC_AUTH_PASSWORD"] = "123"
+app.config["BASIC_AUTH_USERNAME"] = os.environ.get("BASIC_AUTH_USERNAME")
+app.config["BASIC_AUTH_PASSWORD"] = os.environ.get("BASIC_AUTH_PASSWORD")
 
 basic_auth = BasicAuth(app) 
 
