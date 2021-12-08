@@ -44,8 +44,8 @@ jobs:
     - name: Build and Push Container
       run: |-
         docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
-        --build.arg USERNAME=${{ env.BASIC_AUTH_USERNAME }}
-        --build.arg PASSWORD=${{ env.BASIC_AUTH_PASSWORD }} .
+        --build-arg USERNAME=${{ env.BASIC_AUTH_USERNAME }}
+        --build-arg PASSWORD=${{ env.BASIC_AUTH_PASSWORD }} .
         docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
         
     - name: Deploy to Cloud Run
