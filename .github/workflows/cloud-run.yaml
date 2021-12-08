@@ -15,13 +15,15 @@
 on:
   push:
     branches:
-    - example
+    - github_auto
 
 name: Build and Deploy to Cloud Run
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT }}
-  SERVICE: YOUR_SERVICE_NAME
-  REGION: YOUR_SERVICE_REGION
+  SERVICE: ml-api
+  REGION: us-central1
+  BASIC_AUTH_USERNAME: ${{ secrets.BASIC_AUTH_USERNAME }}
+  BASIC_AUTH_PASSWORD: ${{ secrets.BASIC_AUTH_PASSWORD }}
 
 jobs:
   deploy:
@@ -41,7 +43,9 @@ jobs:
 
     - name: Build and Push Container
       run: |-
-        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} .
+        docker build -t gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
+        --build.arg USERNAME=${{ env.BASIC_AUTH_USERNAME }}
+        --build.arg PASSWORD=${{ env.BASIC_AUTH_PASSWORD }} .
         docker push gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }}
         
     - name: Deploy to Cloud Run
@@ -49,4 +53,6 @@ jobs:
         gcloud run deploy ${{ env.SERVICE }} \
           --region ${{ env.REGION }} \
           --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{  github.sha }} \
-          --platform 
+          --platform "managed" \
+          --quiet \
+          --port 5000
