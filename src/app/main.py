@@ -39,7 +39,7 @@ def load_model(file_name = 'xgboost_undersampling.pkl'):
     return pickle.load(open(file_name, "rb"))
 
 
-modelo = load_model(file_name='../../models/xgboost_undersampling.pkl')
+modelo = load_model(file_name='models/xgboost_undersampling.pkl')
 
 # Nova rota - receber um CPF como parâmetro
 @app.route("/score/", methods=["POST"])

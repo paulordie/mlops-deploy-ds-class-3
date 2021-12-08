@@ -1,6 +1,9 @@
 ## make this commands on terminal to persistence authorization
-$ export BASIC_AUTH_USERNAME=admin
-$ export BASIC_AUTH_PASSWORD=123
+> $ export BASIC_AUTH_USERNAME=admin
+
+> $ export BASIC_AUTH_PASSWORD=123
+
+
 
 
 
